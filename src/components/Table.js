@@ -3,9 +3,17 @@ import React, { useContext } from 'react';
 import AppContext from '../context/AppContext';
 
 function Table() {
-  const { planets } = useContext(AppContext);
+  const { planets, handleChange, searchPlanet } = useContext(AppContext);
   return (
     <div>
+      <label htmlFor="filter">
+        <input
+          data-testid="name-filter"
+          onChange={ handleChange }
+          value={ searchPlanet }
+          type="text"
+        />
+      </label>
       <table>
         <thead>
           <tr>

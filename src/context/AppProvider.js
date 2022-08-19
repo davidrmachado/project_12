@@ -6,24 +6,37 @@ import fetchPlanetsAPI from '../services/planetsData';
 
 function AppProvider({ children }) {
   const [planets, setPlanets] = useState([]);
+  const [planetsList, setPlanetsList] = useState([]);
+  const [searchPlanet, setSearchPlanet] = useState('');
 
   function savePlanetsList(newPlanets) {
     setPlanets(newPlanets);
+    setPlanetsList(newPlanets);
   }
 
   useEffect(() => {
     async function fetchPlanets() {
       const newPlanets = await fetchPlanetsAPI();
       setPlanets(newPlanets);
+      setPlanetsList(newPlanets);
     }
     fetchPlanets();
   }, []);
+
+  function handleChange({ target }) {
+    setSearchPlanet(target.value);
+    const filteredList = planetsList.filter((planet) => planet
+      .name.toLowerCase().includes(target.value.toLowerCase()));
+    setPlanets(filteredList);
+  }
 
   return (
     <AppContext.Provider
       value={ {
         planets,
         savePlanetsList,
+        searchPlanet,
+        handleChange,
       } }
     >
       {children}
