@@ -9,6 +9,16 @@ function AppProvider({ children }) {
   const [planetsList, setPlanetsList] = useState([]);
   const [searchPlanet, setSearchPlanet] = useState('');
 
+  const [filterOption, setFilterOption] = useState('population');
+  const [comparisonOption, setComparisonOption] = useState('maior que');
+  const [filterValue, setFilterValue] = useState(0);
+
+  const [filterByNumericValues, setFilterByNumericValues] = useState([{
+    column: filterOption,
+    comparison: comparisonOption,
+    value: filterValue,
+  }]);
+
   function savePlanetsList(newPlanets) {
     setPlanets(newPlanets);
     setPlanetsList(newPlanets);
@@ -30,6 +40,33 @@ function AppProvider({ children }) {
     setPlanets(filteredList);
   }
 
+  function handleCLick() {
+    setFilterByNumericValues([{
+      column: filterOption,
+      comparison: comparisonOption,
+      value: filterValue,
+    }]);
+    switch (comparisonOption) {
+    case 'maior que':
+      setPlanets(planetsList.filter(
+        (planet) => Number(planet[filterOption]) > Number(filterValue),
+      ));
+      break;
+    case 'menor que':
+      setPlanets(planetsList.filter(
+        (planet) => Number(planet[filterOption]) < Number(filterValue),
+      ));
+      break;
+    case ('igual a'):
+      setPlanets(planetsList.filter(
+        (planet) => Number(planet[filterOption]) === Number(filterValue),
+      ));
+      break;
+    default:
+      console.log('default');
+    }
+  }
+
   return (
     <AppContext.Provider
       value={ {
@@ -37,6 +74,15 @@ function AppProvider({ children }) {
         savePlanetsList,
         searchPlanet,
         handleChange,
+        filterOption,
+        setFilterOption,
+        comparisonOption,
+        setComparisonOption,
+        filterValue,
+        setFilterValue,
+        filterByNumericValues,
+        setFilterByNumericValues,
+        handleCLick,
       } }
     >
       {children}
