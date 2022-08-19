@@ -4,7 +4,8 @@ import AppContext from '../context/AppContext';
 
 function Table() {
   const { planets, handleChange, searchPlanet, setFilterOption,
-    setComparisonOption, filterValue, setFilterValue, handleCLick } = useContext(AppContext);
+    setComparisonOption, filterValue, setFilterValue,
+    handleCLick } = useContext(AppContext);
 
   return (
     <div>
