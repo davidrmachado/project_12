@@ -19,6 +19,8 @@ function AppProvider({ children }) {
     value: filterValue,
   }]);
 
+  const [multFilterList, setMultFilterList] = useState([]);
+
   function savePlanetsList(newPlanets) {
     setPlanets(newPlanets);
     setPlanetsList(newPlanets);
@@ -46,24 +48,48 @@ function AppProvider({ children }) {
       comparison: comparisonOption,
       value: filterValue,
     }]);
-    switch (comparisonOption) {
-    case 'maior que':
-      setPlanets(planetsList.filter(
-        (planet) => Number(planet[filterOption]) > Number(filterValue),
-      ));
-      break;
-    case 'menor que':
-      setPlanets(planetsList.filter(
-        (planet) => Number(planet[filterOption]) < Number(filterValue),
-      ));
-      break;
-    case ('igual a'):
-      setPlanets(planetsList.filter(
-        (planet) => Number(planet[filterOption]) === Number(filterValue),
-      ));
-      break;
-    default:
-      console.log('default');
+    if (multFilterList.length === 0) {
+      switch (comparisonOption) {
+      case 'maior que':
+        setPlanets(planetsList.filter(
+          (planet) => Number(planet[filterOption]) > Number(filterValue),
+        ));
+        break;
+      case 'menor que':
+        setPlanets(planetsList.filter(
+          (planet) => Number(planet[filterOption]) < Number(filterValue),
+        ));
+        break;
+      case ('igual a'):
+        setPlanets(planetsList.filter(
+          (planet) => Number(planet[filterOption]) === Number(filterValue),
+        ));
+        break;
+      default:
+        console.log('default');
+      }
+      setMultFilterList(planets);
+    } else {
+      switch (comparisonOption) {
+      case 'maior que':
+        setPlanets(multFilterList.filter(
+          (planet) => Number(planet[filterOption]) > Number(filterValue),
+        ));
+        break;
+      case 'menor que':
+        setPlanets(multFilterList.filter(
+          (planet) => Number(planet[filterOption]) < Number(filterValue),
+        ));
+        break;
+      case ('igual a'):
+        setPlanets(multFilterList.filter(
+          (planet) => Number(planet[filterOption]) === Number(filterValue),
+        ));
+        break;
+      default:
+        console.log('default');
+      }
+      setMultFilterList(planets);
     }
   }
 
@@ -83,6 +109,8 @@ function AppProvider({ children }) {
         filterByNumericValues,
         setFilterByNumericValues,
         handleCLick,
+        multFilterList,
+        setMultFilterList,
       } }
     >
       {children}
