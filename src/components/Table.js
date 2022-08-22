@@ -5,7 +5,7 @@ import AppContext from '../context/AppContext';
 function Table() {
   const { planets, handleChange, searchPlanet, setFilterOption,
     setComparisonOption, filterValue, setFilterValue,
-    handleCLick } = useContext(AppContext);
+    handleCLick, remainingCategories } = useContext(AppContext);
 
   return (
     <div>
@@ -13,11 +13,9 @@ function Table() {
         data-testid="column-filter"
         onChange={ ({ target }) => setFilterOption(target.value) }
       >
-        <option>population</option>
-        <option>orbital_period</option>
-        <option>diameter</option>
-        <option>rotation_period</option>
-        <option>surface_water</option>
+        {remainingCategories.map((category) => (
+          <option key={ category }>{category}</option>
+        ))}
       </select>
       <select
         data-testid="comparison-filter"

@@ -20,6 +20,8 @@ function AppProvider({ children }) {
   }]);
 
   const [multFilterList, setMultFilterList] = useState([]);
+  const [remainingCategories, setRemainingCategories] = useState(['population',
+    'orbital_period', 'diameter', 'rotation_period', 'surface_water']);
 
   function savePlanetsList(newPlanets) {
     setPlanets(newPlanets);
@@ -91,6 +93,8 @@ function AppProvider({ children }) {
       }
       setMultFilterList(planets);
     }
+    setRemainingCategories(remainingCategories.filter((category) => category
+    !== filterOption));
   }
 
   return (
@@ -111,6 +115,8 @@ function AppProvider({ children }) {
         handleCLick,
         multFilterList,
         setMultFilterList,
+        remainingCategories,
+        setRemainingCategories,
       } }
     >
       {children}
