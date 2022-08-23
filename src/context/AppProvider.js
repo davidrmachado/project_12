@@ -20,6 +20,7 @@ function AppProvider({ children }) {
   }]);
 
   const [multFilterList, setMultFilterList] = useState([]);
+
   const [remainingCategories, setRemainingCategories] = useState(['population',
     'orbital_period', 'diameter', 'rotation_period', 'surface_water']);
 
@@ -33,6 +34,7 @@ function AppProvider({ children }) {
       const newPlanets = await fetchPlanetsAPI();
       setPlanets(newPlanets);
       setPlanetsList(newPlanets);
+      setMultFilterList(newPlanets);
     }
     fetchPlanets();
   }, []);
@@ -93,8 +95,7 @@ function AppProvider({ children }) {
       }
       setMultFilterList(planets);
     }
-    setRemainingCategories(remainingCategories.filter((category) => category
-    !== filterOption));
+    setRemainingCategories(remainingCategories.filter((c) => c !== filterOption));
   }
 
   return (

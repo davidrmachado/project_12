@@ -1,11 +1,16 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 
 import AppContext from '../context/AppContext';
 
 function Table() {
   const { planets, handleChange, searchPlanet, setFilterOption,
     setComparisonOption, filterValue, setFilterValue,
-    handleCLick, remainingCategories } = useContext(AppContext);
+    handleCLick, remainingCategories, setMultFilterList } = useContext(AppContext);
+
+  useEffect(() => {
+    setMultFilterList(planets);
+    setFilterOption('population');
+  }, [planets]);
 
   return (
     <div>
